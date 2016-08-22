@@ -1,0 +1,108 @@
+
+\documentclass[10pt]{article}
+
+\usepackage{nopageno}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{framed}
+\usepackage{mathrsfs}
+\usepackage{mdwlist}
+\usepackage[top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage{natbib}
+\usepackage{longtable}
+\usepackage{sectsty}
+\usepackage{tabularx}
+\usepackage{lscape}
+%\usepackage[affil-it]{authblk}
+\usepackage{hyperref}
+
+
+\usepackage[printwatermark]{xwatermark}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{framed}
+
+\usepackage{subcaption}
+
+\newcolumntype{Z}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+\linespread{1}
+
+\begin{document}
+
+%{\centering \Large{Clinical Triad Report}}
+
+\section*{Performance Evaluation Report}
+Teacher Candidate: \Sexpr{names$studteachname} \\
+Mentor Teacher: \Sexpr{names$mentteachname} \\
+Field Instructor: \Sexpr{names$fieldinstname} \\
+Date: \today
+
+
+\subsection*{Performance Summary}
+
+\begin{figure}[h!]
+\begin{framed}
+\begin{subfigure}[b]{0.45\linewidth}
+\centering
+\begin{tabular}{ l c c c c }
+& \multicolumn{4}{c}{Domain} \\
+\cline{2-5}
+ & 1 & 2 & 3 & 4 \\
+Mentor Teacher & \Sexpr{round(mt.myavg[1,]$score, 1)} & \Sexpr{round(mt.myavg[2,]$score, 1)} & \Sexpr{round(mt.myavg[3,]$score, 1)} & \Sexpr{round(mt.myavg[4,]$score, 1)} \\
+Field Instructor & \Sexpr{round(fi.myavg[1,]$score, 1)} & \Sexpr{round(fi.myavg[2,]$score, 1)} & \Sexpr{round(fi.myavg[3,]$score, 1)} & \Sexpr{round(fi.myavg[4,]$score, 1)} \\
+My Average & \Sexpr{round(myavg[1,]$score, 1)} & \Sexpr{round(myavg[2,]$score, 1)} & \Sexpr{round(myavg[3,]$score, 1)} & \Sexpr{round(myavg[4,]$score, 1)} \\
+Program Average & \Sexpr{round(domain.sum[1,]$popmean, 1)} & \Sexpr{round(domain.sum[2,]$popmean, 1)} & \Sexpr{round(domain.sum[3,]$popmean, 1)} & \Sexpr{round(domain.sum[4,]$popmean, 1)}
+\end{tabular}
+\end{subfigure}
+\quad
+\begin{subfigure}[b]{0.45\linewidth}
+\centering
+\raisebox{-.5\height}{\includegraphics[width=1.2\textwidth]{"DomainPlotTest"}}
+\end{subfigure}
+\end{framed}
+\end{figure}
+
+\subsection*{Focus Areas}
+
+\begin{framed}
+
+\begin{raggedright}
+Focus areas are items in which your evaluation results are lower than expected given your overall performance and that of other students in your program. These areas are identified by comparing differences in your performance across domains relative to other student teachers in your same program and do not necessarily indicate poor performance. Based on your results, you might consider focusing further attention on the following areas.
+\vspace{1em} %Controls space
+\end{raggedright}
+
+\includegraphics[width=0.8\textwidth]{"FocusAreaPlotTest"}
+
+\end{framed}
+
+
+\subsection*{Discussion Areas}
+
+\begin{framed}
+%\iffalse \Sexpr{if any are greater than 1, maybe color code}
+\begin{raggedright}
+Discussion areas are items where your mentor teacher and field instructor evaluations differ substantially. Disagreements between mentor teachers and field instructors may arise from fluctuations in your performance across different lessons or through genuine disagreements on how well you are meeting standards. Based on your results, you may want to further explore your performance in the following areas with your field instructor and mentor teacher.
+\vspace{1em}
+\end{raggedright}
+%\fi
+\includegraphics[width=0.8\textwidth]{"DiscussionAreaPlotTest"}
+
+\end{framed}
+
+
+\end{document}
+
+
+

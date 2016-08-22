@@ -1,0 +1,8 @@
+tid,firstname,lastname,email,emailstatus,token,language,validfrom,validuntil,invited,reminded,remindercount,completed,usesleft, attribute_1, attribute_3 , attribute_2 , attribute_4 , attribute_5 
+1,Nate,Brown,nathanael.brown12@gmail.com,OK,34T070T1UdQAXRy,en,,,7/12/16 16:47,N,0,7/12/16 17:08,0,Mentor,,James,Cowan,jcowan@air.org
+2,Cyrus,Grout,cyrusgrout@gmail.com,OK,qTAtBZ56HjmBt2p,en,,,7/12/16 16:47,N,0,7/12/16 17:07,0,Mentor,,Malcolm,Wolff,m.lee.wolff@gmail.com
+3,Vanessa,Quince,vquince2990@gmail.com,OK,wqReMmSUHy3qyjX,en,,,7/12/16 16:47,N,0,7/12/16 17:03,0,Field Instructor,,James,Cowan,jcowan@air.org
+4,Roddy,Theobald,rtheobald@air.org,OK,DELKe_SX5PfnUre,en,,,7/12/16 16:47,N,0,7/12/16 17:04,0,Field Instructor,,Malcolm,Wolff,m.lee.wolff@gmail.com
+5,Bingjie,Chen,cbjmandy@uw.edu,OK,vJNSJ5HQ8SGB8uO,en,,,7/12/16 16:47,N,0,7/12/16 18:20,0,Field Instructor,,James,Cowan,jcowan@air.org
+6,Trevor,Gratz,trevormgratz@gmail.com,OK,VSCQR43Uq1aVG4j,en,,,7/12/16 16:47,N,0,7/12/16 17:13,0,Field Instructor,,Malcolm,Wolff,m.lee.wolff@gmail.com
+7,Christopher,Tien,cdtien@uw.edu,OK,Z0CxHn_1zCMqhqH,en,,,7/12/16 16:47,N,0,7/12/16 17:31,0,Field Instructor,,James,Cowan,jcowan@air.org
