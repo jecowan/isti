@@ -274,7 +274,7 @@ def flag_finished(newentry):
 ##################
 
 def main():
-	mail_list('Data/output.csv','m.lee.wolff@gmail.com','malm4arush123740569!')
+	mail_list('Data/output.csv','m.lee.wolff@gmail.com','')
 	s3_transfer('Data/output.csv','Florida Atlantic University')
 if __name__ == "__main__":
 	main()
