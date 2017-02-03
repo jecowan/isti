@@ -1,11 +1,13 @@
 
+
 \documentclass[10pt]{article}
-
+\usepackage{longtable}
 \usepackage{nopageno}
-
+\usepackage{ifthen}
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
-
+\usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -34,72 +36,101 @@
 \usepackage{framed}
 
 \usepackage{subcaption}
-
+\usepackage{titlesec}
 \newcolumntype{Z}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}X}
 
 \linespread{1}
+\titlespacing*{\section}
+{0pt}{0pt}{0pt}%{0pt}
+
+\newcommand\textbox[1]{%
+  \parbox{.5\textwidth}{#1}%
+}
+
 
 \begin{document}
 
 %{\centering \Large{Clinical Triad Report}}
 
 \section*{Performance Evaluation Report}
-Teacher Candidate: \Sexpr{names$studteachname} \\
-Mentor Teacher: \Sexpr{names$mentteachname} \\
-Field Instructor: \Sexpr{names$fieldinstname} \\
-Date: \today
-
-
+\noindent\textbox{Teacher Candidate: \Sexpr{names$studteachname}\hfill}\textbox{\hfill Date: \today} \\
+\noindent\textbox{Mentor Teacher: \Sexpr{names$mentteachname}\hfill}\textbox{\hfill Field Instructor: \Sexpr{names$fieldinstname}} \\
 \subsection*{Performance Summary}
 
 \begin{figure}[h!]
 \begin{framed}
-\begin{subfigure}[b]{0.45\linewidth}
-\centering
-\begin{tabular}{ l c c c c }
-& \multicolumn{4}{c}{Domain} \\
-\cline{2-5}
- & 1 & 2 & 3 & 4 \\
-Mentor Teacher & \Sexpr{round(mt.myavg[1,]$score, 1)} & \Sexpr{round(mt.myavg[2,]$score, 1)} & \Sexpr{round(mt.myavg[3,]$score, 1)} & \Sexpr{round(mt.myavg[4,]$score, 1)} \\
-Field Instructor & \Sexpr{round(fi.myavg[1,]$score, 1)} & \Sexpr{round(fi.myavg[2,]$score, 1)} & \Sexpr{round(fi.myavg[3,]$score, 1)} & \Sexpr{round(fi.myavg[4,]$score, 1)} \\
-My Average & \Sexpr{round(myavg[1,]$score, 1)} & \Sexpr{round(myavg[2,]$score, 1)} & \Sexpr{round(myavg[3,]$score, 1)} & \Sexpr{round(myavg[4,]$score, 1)} \\
-Program Average & \Sexpr{round(domain.sum[1,]$popmean, 1)} & \Sexpr{round(domain.sum[2,]$popmean, 1)} & \Sexpr{round(domain.sum[3,]$popmean, 1)} & \Sexpr{round(domain.sum[4,]$popmean, 1)}
-\end{tabular}
-\end{subfigure}
 \quad
-\begin{subfigure}[b]{0.45\linewidth}
-\centering
-\raisebox{-.5\height}{\includegraphics[width=1.2\textwidth]{"DomainPlotTest"}}
-\end{subfigure}
+\raisebox{-.5\height}{\includegraphics[width=1.0\textwidth]{"DomainPlotTest"}}
 \end{framed}
 \end{figure}
-
-\subsection*{Focus Areas}
+\subsection*{Focus Areas: \Sexpr{domain.out[1,]$dom.name1}}
 
 \begin{framed}
 
 \begin{raggedright}
-Focus areas are items in which your evaluation results are lower than expected given your overall performance and that of other students in your program. These areas are identified by comparing differences in your performance across domains relative to other student teachers in your same program and do not necessarily indicate poor performance. Based on your results, you might consider focusing further attention on the following areas.
+Focus areas are items in which your evaluation results are lower than expected given your overall performance and that of other students in your program. These areas are identified by comparing differences in your performance across domains relative to other student teachers in your same program and do not necessarily indicate poor performance. Based on your results, you might consider focusing further attention on the following items within \Sexpr{domain.out[1,]$dom.name1}.
 \vspace{1em} %Controls space
 \end{raggedright}
-
-\includegraphics[width=0.8\textwidth]{"FocusAreaPlotTest"}
-
+\includegraphics[width=1.0\textwidth]{"FocusAreaPlotTest"}
 \end{framed}
 
-
-\subsection*{Discussion Areas}
+\newpage
+\subsection*{Strength: \Sexpr{domain.out[1,]$dom.name2}}
 
 \begin{framed}
-%\iffalse \Sexpr{if any are greater than 1, maybe color code}
+
 \begin{raggedright}
-Discussion areas are items where your mentor teacher and field instructor evaluations differ substantially. Disagreements between mentor teachers and field instructors may arise from fluctuations in your performance across different lessons or through genuine disagreements on how well you are meeting standards. Based on your results, you may want to further explore your performance in the following areas with your field instructor and mentor teacher.
-\vspace{1em}
+In addition to your focus areas and based on your results, you are performing strongest in \Sexpr{domain.out[1,]$dom.name2}.
 \end{raggedright}
-%\fi
-\includegraphics[width=0.8\textwidth]{"DiscussionAreaPlotTest"}
+
+\includegraphics[width=1.0\textwidth]{"StrengthPlot"}
 
 \end{framed}
+
+<<setup, echo=FALSE, cache=FALSE>>=
+  score.id <- arrange(filter(combined.data, combined.data$id==i), -abs(fi.score - score))[4:8, ]
+  score.id$diff <- abs(score.id$fi.score - score.id$score)
+if(is.na(max(score.id$diff))){ score.id$diff <- 0}
+@
+
+\newboolean{long}
+\setboolean{long}{\Sexpr{max(score.id$diff) > .5}}
+\ifthenelse {\boolean{long}}{
+\subsection*{Discussion Areas: \Sexpr{domain.out[1,]$dom.name3}}
+
+\begin{framed}
+
+\begin{raggedright}
+Discussion areas are items where your mentor teacher and field instructor evaluations differ substantially. Disagreements between mentor teachers and field instructors may arise from fluctuations in your performance across different lessons or through genuine disagreements on how well you are meeting standards. Based on your results, you may want to further explore your performance in \Sexpr{domain.out[1,]$dom.name3} with your field instructor and mentor teacher.
+\vspace{1em}
+\end{raggedright}
+\includegraphics[width=1.0\textwidth]{"DiscussionAreaPlotTest"}
+\end{framed}
+}
+% {
+% \begin{raggedright}
+% Discussion areas are items where your mentor teacher and field instructor evaluations differ substantially. Disagreements between mentor teachers and field instructors may arise from fluctuations in your performance across different lessons or through genuine disagreements on how well you are meeting standards. Based on your results, your field instructor and mentor teacher do not disagree in significant ways.
+% \end{raggedright}
+% }
+
+
+\newpage
+\subsection*{Your Most Recent Scores}
+
+
+Table of scores by evaluator type and date
+<<setup1, results='asis', echo = FALSE, cache=FALSE>>=
+
+print(xtable(table[,c("Evaluator", "Domain", "Question", "Score", "Date")], digits = 1) , table.placement = "H"
+  , caption.placement = "top"
+  , include.colnames = TRUE
+  , include.rownames = FALSE
+  , size = "small"
+  , tabular.environment = 'longtable'
+  , floating = FALSE
+  , add.to.row = list(pos = list(0),command = "\\hline \\endhead ")
+)
+@
 
 
 \end{document}
