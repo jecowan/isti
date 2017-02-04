@@ -179,6 +179,8 @@ creategraphs <- function(id) {
                mapping=aes(x = domain_name, y = score, color="Your Average"), size=2, shape = 15) +
     
     scale_y_continuous(limit = c(1, (nums+.6)), breaks=(1:nums), expand=c(0,0)) +
+    
+    scale_x_discrete(expand=c(0.1, 0.1)) +
     ylab("") + xlab("") +
     theme(axis.ticks = element_blank(),
           axis.line.x = element_line(),
@@ -267,6 +269,7 @@ creategraphs <- function(id) {
     geom_point(data=score.id,
                mapping=aes(x = question_name, y = pre, color="Your Average"), size=2) +
     scale_y_continuous(limit = c(1, (nums+.1)), breaks=(1:nums), expand=c(0,0))  +
+    scale_x_discrete(expand=c(0.1, 0.1)) +
     xlab("") + ylab("") +
     theme(axis.ticks = element_blank(),
           axis.line.x = element_line(),
@@ -338,6 +341,7 @@ creategraphs <- function(id) {
     geom_point(data=score.id,
                mapping=aes(x = question_name, y = pre, color="Your Average"), size=2) +
     scale_y_continuous(limit = c(1, (nums+.1)), breaks=(1:nums), expand=c(0,0))  +
+    scale_x_discrete(expand=c(0.1, 0.1)) +
     xlab("") + ylab("") +
     theme(axis.ticks = element_blank(),
           axis.line.x = element_line(),
@@ -418,6 +422,7 @@ creategraphs <- function(id) {
       geom_point(aes(x = 1:rows, y=fi.score, color="Field Instructor"), 
                  shape = 15, size=3) +  
       scale_y_continuous(limit = c(1, (nums+.1)), breaks=(1:nums), expand=c(0,0))  +
+      scale_x_discrete(expand=c(0.1, 0.1)) +
       xlab("") + ylab("") +
       theme(axis.ticks = element_blank(),
             axis.line.x = element_line(),
