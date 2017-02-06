@@ -155,32 +155,32 @@ creategraphs <- function(id) {
   score.id <- score.id[order(score.id$domain_name),]
   
   p2<- ggplot(score.id) +
-    geom_rect(aes(x=domain_name,xmin=(1:numd-.25), 
-                  xmax=(1:numd+.25), 
+    geom_rect(aes(x=domain_name,xmin=(1:numd-.2), 
+                  xmax=(1:numd+.2), 
                   ymin=1, 
                   ymax=pop25pt,fill="25th percentile or less"),
               alpha=1/3, 
               linetype="blank") +
-    geom_rect(aes(x=domain_name,xmin=(1:numd-.25), 
-                  xmax=(1:numd+.25), 
+    geom_rect(aes(x=domain_name,xmin=(1:numd-.2), 
+                  xmax=(1:numd+.2), 
                   ymin=pop25pt, 
                   ymax=pop75pt,fill="Middle 50%"),
               alpha=1/3, 
               linetype="blank") + 
-    geom_rect(aes(x=domain_name,xmin=(1:numd-.25), 
-                  xmax=(1:numd+.25), 
+    geom_rect(aes(x=domain_name,xmin=(1:numd-.2), 
+                  xmax=(1:numd+.2), 
                   ymin=pop75pt, 
                   ymax=max,fill="75th percentile or greater"),
               alpha=1/3, 
               linetype="blank") + 
     geom_point(data=score.id,
-               mapping=aes(x = domain_name, y = popmean, color="Program Average"), size=3, shape = 19) + 
+               mapping=aes(x = domain_name, y = popmean, color="Program Average"), size=2.5, shape = 19) + 
     geom_point(data=score.id,
                mapping=aes(x = domain_name, y = score, color="Your Average"), size=2, shape = 15) +
     
     scale_y_continuous(limit = c(1, (nums+.6)), breaks=(1:nums), expand=c(0,0)) +
     
-    scale_x_discrete(expand=c(0.1, 0.1)) +
+    scale_x_discrete(expand=c(0.15, 0.0)) +
     ylab("") + xlab("") +
     theme(axis.ticks = element_blank(),
           axis.line.x = element_line(),
@@ -192,7 +192,7 @@ creategraphs <- function(id) {
           legend.title = element_text(size=16),
           panel.grid.minor.x = element_blank(),
           panel.grid.minor.y = element_blank(),
-          aspect.ratio=0.3,
+          aspect.ratio=0.5,
           panel.background=element_rect(fill="white"),
           plot.margin = unit(c(0,0,0,0), "cm")) +
     scale_fill_manual(name="", values=c("25th percentile or less" = "red", "Middle 50%"="orange", "75th percentile or greater" = "green"), guide = "legend") +
@@ -214,8 +214,8 @@ creategraphs <- function(id) {
     }
     
     
-    p2 <- p2 + annotation_custom(grob = textGrob(label = round(score.id[i,]$popmean,1)), xmin = i+.4, xmax = i+.4, ymin = score.id[i,]$popmean, ymax = score.id[i,]$popmean) 
-    p2 <- p2 + annotation_custom(grob = textGrob(label = round(score.id[i,]$score,1)), xmin = i+.4, xmax = i+.4, ymin = score.id[i,]$score, ymax = score.id[i,]$score) 
+    p2 <- p2 + annotation_custom(grob = textGrob(label = round(score.id[i,]$popmean,1), gp = gpar(fontsize=10)), xmin = i+.6, xmax = i+.6, ymin = score.id[i,]$popmean, ymax = score.id[i,]$popmean) 
+    p2 <- p2 + annotation_custom(grob = textGrob(label = round(score.id[i,]$score,1),gp = gpar(fontsize=10)), xmin = i+.3, xmax = i+.3, ymin = score.id[i,]$score, ymax = score.id[i,]$score) 
     
   }
   score.id <- merge(score.id, smiley, by = "domain")
