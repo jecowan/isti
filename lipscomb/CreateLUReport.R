@@ -31,16 +31,9 @@ source("LipscombImport.R")
 #################################################
 raw <- rename.vars(dat.clean, c("Assessor_Role","Assessment_Completion_Date"), c("attribute_1","submitdate"))
 
-raw$firstname2 <- 'John'
-raw$lastname2 <- 'Smith'
-raw$email2 <- 'studemail'
-raw$firstname1 <- 'Brian'
-raw$lastname1 <- 'Schmetzer'
-raw$email1 <- 'supemail'
 raw$newflag <- 1
 
-data <- cbind(raw$Assessing, raw$'Confident and Passionate', raw$Implementing, raw$Managing, raw$Relationships, raw[c("StudentID","firstname1", "lastname1", "email1", "firstname2", "lastname2", "email2", "attribute_1", "submitdate", "newflag")])
-
+data <- remove.vars(raw, c("Assessment_Document_Title"))
 
 # for(j in 1:numq) {
 #   data[,j] <- gsub("A", "", data[,j])
@@ -59,10 +52,10 @@ setDT(data)[, id := .GRP, by = c("StudentID")]
 data<- as.data.frame(data)
 data <- remove.vars(data, c("new", "newflag", "StudentID"))
 
-colnames(data)[1:20] <- 1:20
+colnames(data)[7:26] <- 1:20
 
 dlf <- melt(data, 
-            id.vars = c("id", "firstname1", "lastname1", "email1","firstname2", "lastname2", "email2", "submitdate", "attribute_1"))
+            id.vars = c("id", "firstname1", "lastname1", "email1","firstname2", "lastname2", "email2", "submitdate", "attribute_1", "mentteachname", "mentteachemail"))
 setDT(dlf)[, question := .GRP, by = c("variable")]
 setDT(dlf)[, type := .GRP, by = c("attribute_1")] # 1 = FS
 
@@ -468,14 +461,13 @@ mt.names <- rename.vars(mt.names, "email1", "mentteachemail")
 mt.names <- remove.vars(mt.names, c("firstname1", "lastname1", "attribute_1"))
 
 
-
 fi.names <- output[which(output$attribute_1 ==sup.name),]
 fi.names <- remove.vars(fi.names, c("row.names", "question", "score", "oa.order", "type", "type.order", "domain", "firstname2", "lastname2", "email2"))
 rownames(fi.names) <- NULL
 fi.names <- unique(fi.names)
 fi.names$fieldinstname <- paste(fi.names$firstname1, fi.names$lastname1, sep = " ")
 fi.names <- rename.vars(fi.names, "email1", "fieldinstemail")
-fi.names <- remove.vars(fi.names, c("firstname1", "lastname1", "attribute_1"))
+fi.names <- remove.vars(fi.names, c("firstname1", "lastname1", "attribute_1", "mentteachemail", "mentteachname"))
 
 output <- remove.vars(output, c("row.names", "question", "score", "oa.order", "type", "type.order", "domain", "firstname1", "lastname1", "email1"))
 output <- unique(output)
@@ -485,7 +477,7 @@ output$studteachname <- paste(output$firstname2, output$lastname2, sep = " ")
 output <- rename.vars(output, "email2", "studteachemail")
 output <- remove.vars(output, c("firstname2", "lastname2"))
 output <- merge(output, fi.names, by = "id", all.x =T)
-output <- merge(output, mt.names, by = "id", all.x =T)
+#output <- merge(output, mt.names, by = "id", all.x =T)
 output$filename <- ""
 output$send <- NA
 # Creating the reports using knitr
