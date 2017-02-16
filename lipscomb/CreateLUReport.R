@@ -54,6 +54,7 @@ data <- remove.vars(data, c("new", "newflag", "StudentID"))
 
 colnames(data)[7:26] <- 1:20
 
+
 dlf <- melt(data, 
             id.vars = c("id", "firstname1", "lastname1", "email1","firstname2", "lastname2", "email2", "submitdate", "attribute_1", "mentteachname", "mentteachemail"))
 setDT(dlf)[, question := .GRP, by = c("variable")]
@@ -494,14 +495,14 @@ for(i in 1:max(data$id)) {
   if(mean(fi.data$score) != "NaN"){fi.myavg <- aggregate(x = fi.data[which(fi.data$id==i), ], by = list(fi.data[which(fi.data$id==i), ]$domain), FUN = "mean")}
   if(mean(mt.data$score) != "NaN"){mt.myavg <- aggregate(x = mt.data[which(mt.data$id==i), ], by = list(mt.data[which(mt.data$id==i), ]$domain), FUN = "mean")}
   myavg <- domain.avg[which(domain.avg$id==i), ]
-  time <- Sys.time()
-  file.name <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".tex", sep="")
-  knit2pdf("TestReport.Rnw", file.name)
-  file.aux <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".aux", sep="")
-  file.out <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".out", sep="")
-  file.xwm <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".xwm", sep="")
-  file.log <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".log", sep="")
-  file.pdf <- paste("TestReport", i, gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".pdf", sep="")
+  time <- Sys.Date()
+  file.name <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".tex", sep="")
+  knit2pdf("PerformanceEvaluationReport.Rnw", file.name)
+  file.aux <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".aux", sep="")
+  file.out <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".out", sep="")
+  file.xwm <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".xwm", sep="")
+  file.log <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".log", sep="")
+  file.pdf <- paste("PerformanceEvaluationReport", gsub(" ", "", names$studteachname, fixed = TRUE), gsub(" ", "", time, fixed = TRUE), ".pdf", sep="")
   output[i,]$filename <- file.pdf
   output[i,]$send <- rbinom(1,1,.5)
   file.remove(file.name, file.aux, file.out, file.xwm, file.log)
